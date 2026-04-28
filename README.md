@@ -15,11 +15,11 @@ Windows, Mac, Ubuntu
 
 ### 1. Fork this repository
 
-Go to `https://github.com/<org>/github-meetup-exercises` and click **Fork**.  
+Go to the top of the page and click **Fork**.  
 Clone your fork locally:
 
 ```bash
-git clone https://github.com/<your-username>/github-meetup-exercises.git
+git clone https://github.com/El-leandr0/github-meetup-exercises.git
 cd github-meetup-exercises
 ```
 
