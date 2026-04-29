@@ -47,25 +47,26 @@ cd github-meetup-exercises
 
 ## Exercise 2 — Guard the Gate
 
-**File to create:** `.github/workflows/01-hello-pipeline.yml`
+**File to create:** `.github/workflows/02-guard-the-gate.yml`
 
 ### How to trigger and verify
 
-1. create an empty file on `.github/workflows/` and give it a name (i.e `01-hello-pipeline.yml`)
+1. create an empty file on `.github/workflows/` and give it a name (i.e `02-guard-the-gate.yml`)
 2. copy yaml from Actionsquest an paste it on the file
 3. Push the file to your repo:
   - git add .
   - git commit -m "<your message>"
   - git push
 
-4. return to main branch:
-  - git checkout main
-2. The workflow fires immediately on that push.
-3. On GitHub, open **Actions → ci** and confirm all steps are green.
-4. Try:
+
+4. The workflow fires immediately on that push.
+5. On GitHub, open **Actions → ci** and confirm all steps are green.
+6. Try:
   - create a new branch, add a file and push. verify if the trigger works.
   - breaking a test locally, push, and watch the job fail. verify if the workflow fails
 
+7. return to main branch:
+  - git checkout main
 
 ### Key concept
 
@@ -127,12 +128,12 @@ GitHub encrypts secrets at rest and automatically masks their values in all log 
   - git commit -m "<your message>"
   - git push → the workflow run is trigered.
 
-2. Now lets test a push in a diferent branch:
+4. Now lets test a push in a diferent branch:
   - git checkout -b feature/test-branch-filter
   - change any line on the README.md.
   - git add .
   - git commit -m "<your message>"
-  - git push --set-upstream origin feature/test-branch-filter -> the workflow will not apear on the console
+  - git push --set-upstream origin feature/test-branch-filter -> the workflow 05 will not apear on the console
   - git checkout main
   
 ### Key concept
@@ -154,8 +155,8 @@ Branch filters make CD safe. Feature branches trigger CI, only `main` triggers d
   - git add .
   - git commit -m "<your message>"
   - git push
-2. Open **Actions → docker-build** and confirm all steps complete.
-3. Go to your GitHub profile → **Packages** to see the pushed image.
+4. Open **Actions → docker-build** and confirm all steps complete.
+5. Go to your GitHub profile → **Packages** to see the pushed image.
 
 > **Note:** If your repository is private, the package will be private by default. You can change visibility in the package settings.
 
@@ -175,9 +176,9 @@ Branch filters make CD safe. Feature branches trigger CI, only `main` triggers d
   - git add .
   - git commit -m "<your message>"
   - git push
-2. Open **Actions → docker-build** and confirm all steps complete.
-3. Push again
-3. Both 07 and 08 workflows are trigered. compare the diference between 08 and 07 build after the second push on Actions UI.
+4. Open **Actions → docker-build** and confirm all steps complete.
+5. Push again
+6. Both 07 and 08 workflows are trigered. compare the diference between 08 and 07 build after the second push on Actions UI.
 
 ### Why `mode=max`?
 
@@ -211,7 +212,9 @@ Push this file. The job name (`test`) is what you reference as a required status
 
 Go to **Settings → Branches → Add branch ruleset** (or Add rule), branch name pattern: `main`.
 
-Enable the following:
+- on "Enforcement status" select Active.
+- on "Target branches" select "Add target">"include by pattern">write "main" (without "")
+- Enable the following:
 
 | Setting | Why |
 |---|---|
@@ -219,6 +222,9 @@ Enable the following:
 | ✅ Require status checks to pass (add `test`) | CI must be green before merge |
 | ✅ Block force pushes | History rewriting forbidden |
 | ❌ Do not enforce for administrators | Admins must follow the same rules |
+
+
+
 
 ### How to verify
 
@@ -252,9 +258,9 @@ Go to **Settings → Environments** and create three environments:
 - Deployment branches: `main` only
 
 **`production`**
-- Required reviewers: add yourself (or a teammate) — at least 1
+- Required reviewers: add yourself
 - Wait timer: 5 minutes
-- Deployment branches: `main` only
+- Deployment branches and tags > selected branches and tags: `main` only
 - Check **Prevent self-review** if you want strict separation
 
 ### Part B — Create the workflow
@@ -263,21 +269,21 @@ Go to **Settings → Environments** and create three environments:
 
 1. after exercise 9 direct push to main are disabled. the push must be triggered by a PR (pull request) :
   - git checkout -b feature-ex11
-1. create an empty file on `.github/workflows/` and give it a name (i.e `10-production-gate.yml`)
-2. copy yaml from Actionsquest an paste it on the file
-3. Push the file to your repo:
+2. create an empty file on `.github/workflows/` and give it a name (i.e `10-production-gate.yml`)
+3. copy yaml from Actionsquest an paste it on the file
+4. Push the file to your repo:
   - git add .
   - git commit -m "<your message>"
   - git push --set-upstream origin feature-ex11
 
-4. open a new pull request
-5. aprove the pull request -> will create a new commit on main
-6. Watch **Actions → deploy**:
+5. open a new pull request
+6. aprove the pull request -> will create a new commit on main
+7. Watch **Actions → deploy**:
    - `deploy-dev` runs immediately.
    - `deploy-staging` runs after dev succeeds.
    - `deploy-production` **pauses** and shows a yellow "Waiting for review" badge.
-3. Open the paused run, click **Review deployments**, select `production`, and approve.
-4. After the 5-minute wait timer, the production job runs.
+8. Open the paused run, click **Review deployments**, select `production`, and approve.
+9. After the 5-minute wait timer, the production job runs.
 
 ### Key concept
 
